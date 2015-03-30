@@ -1,0 +1,35 @@
+{
+    "name": "there",
+    "version": "0.1.0",
+    "description": "Effect oriented language",
+    "author": "Wolf Bas <becevka@kucoe.net>",
+    "main" : "./lib/there",
+    "bin": {
+        "elvn": "./bin/there"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kucoe/there.git"
+    },
+    "bugs": "https://github.com/kucoe/there/issues",
+    "engines": {
+        "node": ">= 0.8.x"
+    },
+    "dependencies": {
+        "cline": ">=0.7"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "should": "*"
+    },
+    "scripts": {
+        "test": "bin/there example/lang-steps.th"
+    },
+    "keywords": ["effect", "language"],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://kucoe.mit-license.org/"
+        }
+    ]
+}

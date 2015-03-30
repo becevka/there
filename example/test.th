@@ -1,0 +1,63 @@
+total is 0;
+
+11 {
+    total is total with @i
+}
+
+@print total
+
+#55
+
+plusOne is {a is @a with 1} for @a
+
+@print plusOne of 10
+
+#11
+
+pow is {
+
+    @exp is? 0 {
+        1
+    }
+    @exp isnot? 0 {
+        @base on pow of @exp without 1
+    }
+} for @base and @exp
+
+@print pow of 2 and 10
+
+#1024
+
+x is 4
+setx is {
+    set of @x and @val
+} for @x from x and @val
+
+setx of 50
+
+@print x
+
+#50
+
+f is  {
+   {@a with @b} for @b
+} for @a
+
+@print f of 4, of 5
+
+#9
+
+
+
+sum is {
+    sum is 0
+    length of @array {
+        sum is sum with el of @array and @i
+    }
+} for @array
+
+@print sum of array with 1, 2, 3
+
+#6
+
+@my_file is @file "file.txt"
