@@ -1,9 +1,11 @@
 var should = require('should');
 var p = require('../lib/parse');
+var facet = require('../lib/facet');
 
-
+var context = facet();
+var parser = p(context);
 var parse = function(text) {
-    return p(text).sequence;
+    return parser.parse(text).sequence;
 };
 
 describe('parse', function () {

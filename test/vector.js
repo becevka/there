@@ -1,11 +1,14 @@
 var should = require('should');
-var parse = require('../lib/parse');
-var vectors = require('../lib/integ/vectors');
-var resources = require('../lib/integ/resources');
+var p = require('../lib/parse');
+var facet = require('../lib/facet');
 var e = require('../lib/evaluate');
-var evaluator = e();
+
+var context = facet();
+var parser = p(context);
+var evaluator = e(context);
 var there = evaluator.there.bind(evaluator);
 var evaluate = evaluator.eval.bind(evaluator);
+var parse = parser.parse.bind(parser);
 
 function createOut(string) {
     return there({
