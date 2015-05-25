@@ -106,6 +106,52 @@ describe('vector', function () {
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
     });
+    it('should run return block', function () {
+        var obj = evaluate(parse('f = {{@a + @b} (@a{@a} @b)} (@a); f 5 4'));
+        should.exist(obj);
+        obj.value().should.equal(9);
+    });
+    it('should use closure quick notation', function () {
+        var obj = evaluate(parse('f = {{@a + @b} (@@a @b)} (@a); f 5 4'));
+        should.exist(obj);
+        obj.value().should.equal(9);
+    });
+    it('should support multi execute with closure', function () {
+        var obj = evaluate(parse('f = {{@a + @b} (@@a @b)} (@a); f 5 4; f 3 4'));
+        should.exist(obj);
+        obj.value().should.equal(7);
+    });
+    it('should import', function () {
+        var obj = evaluate(parse('a is 12; bid = {c << a; @el is c }; sum is 10; sum bid'));
+        should.exist(obj);
+        obj.value().should.equal(22);
+    });
+    it('should export', function () {
+        var obj = evaluate(parse('bid = {a is 12; a >> b }; bid; b is 10'));
+        should.exist(obj);
+        obj.value().should.equal(22);
+    });
+    it('should multi return', function () {
+        var obj = evaluate(parse('bid = {a = 12; b = 10 + @i; a >>; b >>;} (@i); bid 5'));
+        should.exist(obj);
+        obj.reduce(function (a, b) {
+            return a + b
+        }).should.equal(27);
+    });
+    it('should support generators', function () {
+        var obj = evaluate(parse('a = 10; gn is {a <<; @times _ {a + 1; a >>;};} (@times); gn 5'));
+        should.exist(obj);
+        obj.reduce(function (a, b) {
+            return a + b
+        }).should.equal(65);
+    });
+    it.only('should support dynamic generators', function () {
+        var obj = evaluate(parse('(?list) : { a = 0; repeat _ { a >>; a + 1;};}; repeat = 2; list; repeat + 3; list'));
+        should.exist(obj);
+        obj.reduce(function (a, b) {
+            return a + b
+        }).should.equal(10);
+    });
     it('should nor cache results', function () {
         var t = createOut();
         evaluate(parse('d is { c is @color; (@c) _ {car is @el }; car }'), null, t);

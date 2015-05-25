@@ -16,35 +16,38 @@ apple is! pear;
 
 'Pear: ' + isPear @print;
 
+# vectors
 a is {
     apple is red
-}
+};
 
 b is {
     pear is yellow
-}
+};
 
 a; b; #calls
 
 color is {
     @el is red
-}
+};
 
 plum color;
 
 wrap is {
     @el is @color #connect to parameter
     @el @next (@fruit) @fruit
-}
+};
 
 car wrap (@color @next @fruit) black {@el is @fruit} banana;
 
 
 print is {
     @1 is? @2 @print
-} #no named parameters
+}; #no named parameters
 
 print apple red;
+
+# value elements
 
 'hello' + ' world' @print;
 'hello' - 'l' @print;
@@ -69,10 +72,89 @@ d is 2;
 (t) : { s without 2};
 'T is ' + t @print;
 
-'Where is my money?' _ {place is @el}
-'How much money?' _ {amount is @el}
+#interactive
+
+place is '';
+'Where is my money?' _ {place is @el};
+amount is 0;
+'How much money?' _ {amount is @el};
 
 place @print;
 amount @print;
+
+# functional
+
+colorCheck is {
+    (?isColor) : {@what is? @color};
+    '' + @what + ' is ' + @color + ': ' + isColor @print;
+} (@what @color);
+
+passer is {
+    @what is @color
+} (@what @color) ;
+
+locker is {
+    @what is?! @color _ {@what is @color}
+} (@what @color);
+
+swapper is {
+    @what is? @colorA _ {@what is! @colorA; @what is @colorB}
+} (@what @colorA @colorB);
+
+passer bike black;
+passer bike black;
+passer bike black; #all 3
+locker bike green;
+locker bike green;
+locker bike green; #only 1
+
+colorCheck bike black;
+colorCheck bike green;
+
+swapper bike black green; #all green
+
+colorCheck bike black;
+colorCheck bike green;
+
+# continuations
+
+(rotten) ... {
+    @el is? green _ {@el is! green; @el is yellow}
+    @el is? red _ {@el is! red; @el is brown}
+};
+
+grape is green;
+cherry is red;
+
+colorCheck grape green;
+colorCheck cherry red;
+
+grape is rotten;
+cherry is rotten;
+
+colorCheck grape green;
+colorCheck cherry red;
+
+swap is {
+    @what is? @colorA _ {@what is! @colorA; @what is @colorB}
+} (@what @colorA @colorB);
+
+rot is {
+    swap @el green yellow;
+    swap @el red brown;
+};
+
+grass is green;
+berry is red;
+
+colorCheck grass green;
+colorCheck berry red;
+
+grass rot;
+berry rot;
+
+colorCheck grass green;
+colorCheck berry red;
+
 
 @print;

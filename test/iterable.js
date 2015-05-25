@@ -63,6 +63,12 @@ describe('iterable', function () {
         should.exist(obj);
         obj.value().should.equal(4);
     });
+    it('should ask with string for text result', function () {
+        var t = createIn('John');
+        var obj = evaluate(parse('name is ""; "enter your name" _ {name is @el}; name'), null, t);
+        should.exist(obj);
+        obj.value().should.equal('John');
+    });
     it('should iterate list', function () {
         var obj = evaluate(parse('[red green blue] _ {count is @i; book is @el}; book'));
         should.exist(obj);
@@ -162,5 +168,11 @@ describe('iterable', function () {
         obj.size(5).should.equal(1);
         obj.size(6).should.equal(0);
         obj.size(7).should.equal(0);
+    });
+    it('should support continuation', function () {
+        var obj = evaluate(parse('(apple color) ... {@el is red}; apple is color'));
+        should.exist(obj);
+        obj.value().should.equal('apple');
+        obj.size('red').should.equal(1);
     });
 });

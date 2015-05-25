@@ -35,12 +35,21 @@ a @print;
 #54
 
 f =  {
-   {@a + @b} (@b)
+   {@a + @b} (@@a @b)
 } (@a);
 
 f 4 5 @print;
 
 #9
+
+f 3 4 @print;
+
+#7
+
+fx = {@a + @b} (@a{f 7 9} @b);
+fx 6 @print;
+
+#22
 
 sum = {
     sum = 0;

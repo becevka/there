@@ -1,0 +1,23 @@
+colorCheck is {
+    (?isColor) : {@what is? @color};
+    '' + @what + ' is ' + @color + ':' + isColor @print;
+} (@what @color);
+
+(rotten) ... {
+    what import @el;
+    @el is? green _ {what is! green; what is yellow}
+    @el is? red _ {what is! red; what is brown}
+};
+
+grape is green;
+cherry is red;
+
+colorCheck grape green;
+colorCheck cherry red;
+
+grape is rotten;
+cherry is rotten;
+
+colorCheck grape green;
+colorCheck cherry red;
+

@@ -80,15 +80,15 @@ t;
 
 #declarations/ continuations
 
-(apple, color) ... {
+(apple color) ... {
     apple is red
 }
 
-(pear, color) ... { # when pear and color continue {}
+(pear color) ... { # when pear and color continue {}
     pear is yellow
 }
 
-(*, color) ... {
+(* color) ... {
     (c) : { #define c from {}
          @el is? apple {
             @export red
@@ -104,20 +104,19 @@ t;
     @el is brown on red
 }
 
-apple ? red {
+apple ? red _ {
     @print 'read apple'
 }
 
 # special block executions
 
-4 {
-    @print @i #i allocates the iteration number.
+4 _ {
+    @print @i; #i allocates the iteration number.
     @print @el #will be 4
 }
 
-'Enter your name' {
-    @print @input #input is user input
-    @print @el # will be the message
+'Enter your name' _ {
+    @print @el # will be the input
 }
 
 color is {
@@ -182,7 +181,7 @@ extend is {
     s is sequence @args
     b is block s
     v is @el with b
-    export v
+    v
 }
 
 test is {
