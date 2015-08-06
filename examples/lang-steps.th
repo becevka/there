@@ -119,8 +119,9 @@ colorCheck bike green;
 # continuations
 
 (rotten) ... {
-    @el is? green _ {@el is! green; @el is yellow}
-    @el is? red _ {@el is! red; @el is brown}
+    what << @el;
+    what is? green _ {what is! green; what is yellow};
+    what is? red _ {what is! red; what is brown};
 };
 
 grape is green;
@@ -135,11 +136,14 @@ cherry is rotten;
 colorCheck grape green;
 colorCheck cherry red;
 
+# extended continuation
+
 swap is {
     @what is? @colorA _ {@what is! @colorA; @what is @colorB}
 } (@what @colorA @colorB);
 
-rot is {
+(rot) ... {
+    what << @el;
     swap @el green yellow;
     swap @el red brown;
 };
@@ -150,11 +154,8 @@ berry is red;
 colorCheck grass green;
 colorCheck berry red;
 
-grass rot;
-berry rot;
+grass is rot;
+berry is rot;
 
 colorCheck grass green;
 colorCheck berry red;
-
-
-@print;

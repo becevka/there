@@ -1,23 +1,30 @@
 colorCheck is {
     (?isColor) : {@what is? @color};
-    '' + @what + ' is ' + @color + ':' + isColor @print;
+    '' + @what + ' is ' + @color + ': ' + isColor @print;
 } (@what @color);
 
-(rotten) ... {
-    what import @el;
-    @el is? green _ {what is! green; what is yellow}
-    @el is? red _ {what is! red; what is brown}
+swap is {
+    @what @print?;
+    @what is? @colorA _ {@what is! @colorA; @what is @colorB}
+} (@what @colorA @colorB);
+
+(rot) ... {
+    what << @el;
+    what @print?;
+    swap << ;
+    swap what green yellow;
+    swap what red brown;
 };
 
-grape is green;
-cherry is red;
+grass is green;
+berry is red;
 
-colorCheck grape green;
-colorCheck cherry red;
+colorCheck grass green;
+colorCheck berry red;
 
-grape is rotten;
-cherry is rotten;
+grass is rot;
+berry is rot;
 
-colorCheck grape green;
-colorCheck cherry red;
+colorCheck grass green;
+colorCheck berry red;
 

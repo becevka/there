@@ -193,9 +193,9 @@ test is {
 
 #groups/lists
 
-[1,2,4]
+[1 2 4]
 
-basket is [](12, apple) # basket is list of 12 apple
+basket is [](12 apple) # basket is list of 12 apple
 
 basket has? apple #12
 basket is? apple #0
@@ -219,7 +219,7 @@ basket is [](12, {
 
 #groups/sequences
 seq is [b is 'hello'] #no type definition
-seq next is 'world' # [b is 'hello' 'world']
+seq add 'world' # [b is 'hello' 'world']
 
 #iterators
 
@@ -229,11 +229,11 @@ seq next is 'world' # [b is 'hello' 'world']
 
 #ranges
 
-(1 .. 12) {
+(1 .. 12) _ {
     count + @el
 }
 
-(a .. 33 3) { #start end step
+(a .. 33 3) _ { #start end step
     text + @el
 }
 

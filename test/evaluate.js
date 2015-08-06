@@ -124,7 +124,7 @@ describe('evaluate', function () {
     });
     it('should remove from there', function () {
         var t = there();
-        var obj = evaluate(parse('book'), null, t);
+        evaluate(parse('book'), null, t);
         should.exist(t);
         t.size('book').should.equal(1);
         t.remove('book');

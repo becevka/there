@@ -145,7 +145,7 @@ describe('vector', function () {
             return a + b
         }).should.equal(65);
     });
-    it.only('should support dynamic generators', function () {
+    it('should support dynamic generators', function () {
         var obj = evaluate(parse('(?list) : { a = 0; repeat _ { a >>; a + 1;};}; repeat = 2; list; repeat + 3; list'));
         should.exist(obj);
         obj.reduce(function (a, b) {
