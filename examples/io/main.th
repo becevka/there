@@ -1,0 +1,3 @@
+#empty index file
+
+test @file "../io-test.txt";

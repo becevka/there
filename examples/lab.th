@@ -4,16 +4,15 @@ colorCheck is {
 } (@what @color);
 
 swap is {
-    @what @print?;
-    @what is? @colorA _ {@what is! @colorA; @what is @colorB}
-} (@what @colorA @colorB);
+    item << @el;
+    item is? @colorA _ {item is! @colorA; item is @colorB};
+} (@colorA @colorB);
 
 (rot) ... {
     what << @el;
-    what @print?;
     swap << ;
-    swap what green yellow;
-    swap what red brown;
+    what swap green yellow;
+    what swap red brown;
 };
 
 grass is green;
@@ -27,4 +26,6 @@ berry is rot;
 
 colorCheck grass green;
 colorCheck berry red;
+colorCheck grass yellow;
+colorCheck berry brown;
 
