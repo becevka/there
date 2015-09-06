@@ -116,6 +116,11 @@ describe('vector', function () {
         should.exist(obj);
         obj.value().should.equal(9);
     });
+    it('should use closure quick notation on top level', function () {
+        var obj = evaluate(parse('speed is 12; f is {@el is @speed}; 23 f (@@speed)'));
+        should.exist(obj);
+        obj.value().should.equal(35);
+    });
     it('should support multi execute with closure', function () {
         var obj = evaluate(parse('f = {{@a + @b} (@@a @b)} (@a); f 5 4; f 3 4'));
         should.exist(obj);
@@ -152,7 +157,7 @@ describe('vector', function () {
             return a + b
         }).should.equal(10);
     });
-    it('should nor cache results', function () {
+    it('should not cache results', function () {
         var t = createOut();
         evaluate(parse('d is { c is @color; (@c) _ {car is @el }; car }'), null, t);
         var obj = evaluate(parse('d (@color) "red"'), null, t);
@@ -165,6 +170,13 @@ describe('vector', function () {
         obj.value().should.equal('car');
         obj.size('green').should.equal(1);
         obj.size('red').should.equal(0);
+    });
+    it.only('should support env passing', function () {
+        var obj = evaluate(parse('a is {book is red;};b is {book is green};(c) : a;b(@env)c'));
+        should.exist(obj);
+        obj.value().should.equal('book');
+        obj.size('red').should.equal(1);
+        obj.size('green').should.equal(1);
     });
     //TODO
     // a (* @a[\d] * @b[\d] *) there was 1 woman with 2 cats

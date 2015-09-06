@@ -5,7 +5,7 @@
     "author": "Wolf Bas <becevka@kucoe.net>",
     "main" : "./lib/there",
     "bin": {
-        "elvn": "./bin/there"
+        "there": "./bin/there"
     },
     "repository": {
         "type": "git",
