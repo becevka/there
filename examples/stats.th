@@ -1,0 +1,25 @@
+$ rand;
+
+generate is {
+    (?generated) : { nextRandom @options };
+    item << @el;
+    check <<;
+    @num _ { item is generated };
+    opts << @options;
+    opts add cherry;
+} (@num @options @env{rand});
+
+check is {
+    (?times) : {@what is? @type};
+    '' + @what + ' is ' + @type + ': ' + times @print;
+} (@what @type);
+
+opts is [apple pear plum];
+
+apple generate 100 opts;
+
+check apple apple
+check apple pear
+check apple plum
+
+opts

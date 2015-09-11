@@ -1,0 +1,6 @@
+{
+  "resources": ["resources"],
+  "vectors": ["vectors"],
+  "synonyms": ["synonyms"],
+  "index": "main"
+}

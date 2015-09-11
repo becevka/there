@@ -49,6 +49,19 @@ describe('vector', function () {
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
     });
+    it('should auto read parameters', function () {
+        var obj = evaluate(parse('mode auto-read on; a is { book is @color; book is @color2 }; a red green'));
+        should.exist(obj);
+        obj.value().should.equal('book');
+        obj.size('red').should.equal(1);
+        obj.size('green').should.equal(1);
+    });
+    it('should should support arity parameters', function () {
+        var obj = evaluate(parse('a is { book is @1 }(1); a red pear is white'));
+        should.exist(obj);
+        obj.value().should.equal('pear');
+        obj.size('white').should.equal(1);
+    });
     it('should run block with side effect on element', function () {
         var obj = evaluate(parse('color is { @el is red }; book color '));
         should.exist(obj);
@@ -131,6 +144,16 @@ describe('vector', function () {
         should.exist(obj);
         obj.value().should.equal(22);
     });
+    it('should import by name', function () {
+        var obj = evaluate(parse('a is 12; bid = {a <<; @el is a }; sum is 10; sum bid'));
+        should.exist(obj);
+        obj.value().should.equal(22);
+    });
+    it('should import args', function () {
+        var obj = evaluate(parse('bid = {<<; @el is a } (@a); sum is 10; sum bid 12'));
+        should.exist(obj);
+        obj.value().should.equal(22);
+    });
     it('should export', function () {
         var obj = evaluate(parse('bid = {a is 12; a >> b }; bid; b is 10'));
         should.exist(obj);
@@ -159,7 +182,7 @@ describe('vector', function () {
     });
     it('should not cache results', function () {
         var t = createOut();
-        evaluate(parse('d is { c is @color; (@c) _ {car is @el }; car }'), null, t);
+        evaluate(parse('d is { car; (@@color) _ {car is @el }; car }'), null, t);
         var obj = evaluate(parse('d (@color) "red"'), null, t);
         should.exist(obj);
         obj.value().should.equal('car');
@@ -171,7 +194,7 @@ describe('vector', function () {
         obj.size('green').should.equal(1);
         obj.size('red').should.equal(0);
     });
-    it.only('should support env passing', function () {
+    it('should support env passing', function () {
         var obj = evaluate(parse('a is {book is red;};b is {book is green};(c) : a;b(@env)c'));
         should.exist(obj);
         obj.value().should.equal('book');

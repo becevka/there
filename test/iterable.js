@@ -70,7 +70,7 @@ describe('iterable', function () {
         obj.value().should.equal('John');
     });
     it('should iterate list', function () {
-        var obj = evaluate(parse('[red green blue] _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; [red green blue] _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -78,7 +78,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should pre-evaluate list', function () {
-        var obj = evaluate(parse('a is "red"; b is "green"; c is "blue"; [a b c] _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; a is "red"; b is "green"; c is "blue"; [a b c] _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -86,7 +86,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence', function () {
-        var obj = evaluate(parse('(red green blue) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (red green blue) _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -94,7 +94,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence with reference', function () {
-        var obj = evaluate(parse('b is "blue"; (red green @b) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; b is "blue"; (red green @b) _ {book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -102,7 +102,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence by reference', function () {
-        var obj = evaluate(parse('a is {count is @i; book is @el}; (red green blue) _ a; book'));
+        var obj = evaluate(parse('book; a is {count is @i; book is @el}; (red green blue) _ a; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -110,7 +110,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate range', function () {
-        var obj = evaluate(parse('(1 .. 3) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (1 .. 3) _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -118,7 +118,7 @@ describe('iterable', function () {
         obj.size(3).should.equal(1);
     });
     it('should iterate range with step', function () {
-        var obj = evaluate(parse('(1 .. 6 2) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (1 .. 6 2) _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -130,7 +130,7 @@ describe('iterable', function () {
         obj.size(7).should.equal(0);
     });
     it('should iterate alpha range', function () {
-        var obj = evaluate(parse('(a .. c) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (a .. c) _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('a').should.equal(1);
@@ -138,7 +138,7 @@ describe('iterable', function () {
         obj.size('c').should.equal(1);
     });
     it('should iterate alpha range with step', function () {
-        var obj = evaluate(parse('(a .. f 2) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (a .. f 2) _ {count is @i; book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('a').should.equal(1);
@@ -150,7 +150,7 @@ describe('iterable', function () {
         obj.size('g').should.equal(0);
     });
     it('should iterate dynamic range', function () {
-        var obj = evaluate(parse('a is 1; b is 3; (@a .. @b) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; a is 1; b is 3; (@a .. @b) _ {book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -158,7 +158,7 @@ describe('iterable', function () {
         obj.size(3).should.equal(1);
     });
     it('should iterate dynamic range with step', function () {
-        var obj = evaluate(parse('a is 1; b is 6; c is 2; (@a .. @b @c) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; a is 1; b is 6; c is 2; (@a .. @b @c) _ {book is @el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
