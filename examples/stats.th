@@ -1,12 +1,13 @@
+start is @time;
+
 $ rand;
 
 generate is {
-    (?generated) : { nextRandom @options };
+    (?generated) : { @rand @options };
     item << @el;
-    check <<;
     @num _ { item is generated };
-    opts << @options;
-    opts add cherry;
+    #opts << @options;
+    #opts add cherry;
 } (@num @options @env{rand});
 
 check is {
@@ -16,10 +17,11 @@ check is {
 
 opts is [apple pear plum];
 
-apple generate 100 opts;
+apple generate 10000 opts;
 
-check apple apple
-check apple pear
-check apple plum
+check apple apple;
+check apple pear;
+check apple plum;
 
-opts
+end is @time;
+end - start

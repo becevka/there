@@ -71,4 +71,32 @@ describe('value', function () {
         should.exist(obj);
         obj.should.equal(3);
     });
+    it('should create number value from resource', function () {
+        var t = there();
+        t.resources['t'] = function() {
+            return 3;
+        };
+        var obj = evaluate(parse('a is @t'), null, t);
+        should.exist(obj);
+        obj.value().should.equal(3);
+    });
+    it('should create string value from resource', function () {
+        var t = there();
+        t.resources['t'] = function() {
+            return "test";
+        };
+        var obj = evaluate(parse('a is @t'), null, t);
+        should.exist(obj);
+        obj.value().should.equal("test");
+    });
+    it('should create list value from resource', function () {
+        var t = there();
+        t.resources['t'] = function() {
+            return ["test", "test2"];
+        };
+        var obj = evaluate(parse('a is @t'), null, t);
+        should.exist(obj);
+        obj.value().should.eql(["test", "test2"]);
+    });
+
 });

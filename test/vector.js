@@ -63,10 +63,16 @@ describe('vector', function () {
         obj.size('white').should.equal(1);
     });
     it('should run block with side effect on element', function () {
-        var obj = evaluate(parse('color is { @el is red }; book color '));
+        var obj = evaluate(parse('color is { @el is red }; book color; book '));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
+    });
+    it('should run block without side effect on other params', function () {
+        var obj = evaluate(parse('color is { @a is red }; color (@a) test; test '));
+        should.exist(obj);
+        obj.value().should.equal('test');
+        obj.size('red').should.equal(0);
     });
     it('should create named parser', function () {
         var obj = evaluate(parse('a is { book is @a; book is @b }; a (@a @b) red green'));

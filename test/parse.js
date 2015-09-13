@@ -160,4 +160,13 @@ describe('parse', function () {
         should.exist(parsed.next.next.next.next.next);
         parsed.next.next.next.next.next.value.should.equal(':');
     });
+    it('should avoid empty endings', function () {
+        var parsed = parse('x is "a man" ');
+        should.not.exist(parsed.next.next.next);
+        parsed = parse('x is "a man" ; x');
+        var value = parsed.next.next.next;
+        value.type.should.equal('switch');
+        parsed = parse(' {x is  "a man"  } x ');
+        should.not.exist(parse(parsed.value).next.next.next);
+    });
 });
