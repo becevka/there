@@ -13,7 +13,7 @@
     },
     "bugs": "https://github.com/kucoe/there/issues",
     "engines": {
-        "node": ">= 4.0.x"
+        "node": ">= 0.8.x"
     },
     "dependencies": {},
     "devDependencies": {

@@ -17,7 +17,7 @@ check is {
 
 opts is [apple pear plum];
 
-apple generate 10000 opts;
+apple generate 100000 opts;
 
 check apple apple;
 check apple pear;
