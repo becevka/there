@@ -1,7 +1,7 @@
-colorCheck is {
-    (?isColor) : {@what is? @color};
-    '' + @what + ' is ' + @color + ': ' + isColor @print;
-} (@what @color);
+test is {
+    (isColor) : {@what is? @color};
+    @expected is?! isColor _ {'' + @what + ' is ' + @color + ':' + isColor + ', but expected:' + @expected  @error};
+} (@what @color @expected);
 
 swap is {
     item << @el;
@@ -18,14 +18,15 @@ swap is {
 grass is green;
 berry is red;
 
-colorCheck grass green;
-colorCheck berry red;
+test grass green 1;
+test berry red 1;
 
 grass is rot;
 berry is rot;
 
-colorCheck grass green;
-colorCheck berry red;
-colorCheck grass yellow;
-colorCheck berry brown;
+test grass green 0;
+test berry red 9;
+test grass yellow 1;
+test berry brown 1;
+'done'
 
