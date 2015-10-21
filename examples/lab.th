@@ -25,7 +25,7 @@ grass is rot;
 berry is rot;
 
 test grass green 0;
-test berry red 9;
+test berry red 0;
 test grass yellow 1;
 test berry brown 1;
 'done'
