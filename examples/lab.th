@@ -1,15 +1,15 @@
-test is {
-    (isColor) : {@what is? @color};
-    @expected is?! isColor _ {'' + @what + ' is ' + @color + ':' + isColor + ', but expected:' + @expected  @error};
-} (@what @color @expected);
+test for {
+    (isColor) : {$what is? $color};
+    $expected is?! isColor _ {'' + $what + ' is ' + $color + ':' + isColor + ', but expected:' + $expected  $error};
+} ($what $color $expected);
 
-swap is {
-    item << @el;
-    item is? @colorA _ {item is! @colorA; item is @colorB};
-} (@colorA @colorB);
+swap for {
+    item << $el;
+    item is? $colorA _ {item is! $colorA; item is $colorB};
+} ($colorA $colorB);
 
 (rot) ... {
-    what << @el;
+    what << $el;
     swap << ;
     what swap green yellow;
     what swap red brown;
@@ -24,9 +24,9 @@ test berry red 1;
 grass is rot;
 berry is rot;
 
-test grass green 0;
-test berry red 0;
-test grass yellow 1;
-test berry brown 1;
+test grass green 7;
+test berry red 9;
+test grass yellow 2;
+test berry brown 5;
 'done'
 

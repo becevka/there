@@ -20,12 +20,12 @@ function createIn(input) {
 
 describe('iterable', function () {
     it('should run through args array', function () {
-        var obj = evaluate(parse('adder is { count is 0; @args _ { count is @el }; count }; adder 2 3 5'));
+        var obj = evaluate(parse('adder = { count = 0; $args _ { count is $el }; count }; adder 2 3 5'));
         should.exist(obj);
         obj.value().should.equal(10);
     });
     it('should have constructors', function () {
-        var obj = evaluate(parse('a is { book is @1; book is @2 }; (book) : {a red green}; book'));
+        var obj = evaluate(parse('a = { book is $1; book is $2 }; (book) : {a red green}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -35,42 +35,42 @@ describe('iterable', function () {
         var t = there();
         var obj = evaluate(parse('book is red; (?a) : {book is? red}; a'), null, t);
         should.exist(obj);
-        obj.should.equal(1);
+        obj.value().should.equal(1);
         obj = evaluate(parse('book is! red; a'), null, t);
         should.exist(obj);
-        obj.should.equal(0);
+        obj.value().should.equal(0);
     });
     it('should run constructors through reference', function () {
-        var obj = evaluate(parse('a is { book is @1; book is @2 }; b is {a red green}; (book) : b; book'));
+        var obj = evaluate(parse('a = { book is $1; book is $2 }; b = {a red green}; (book) : b; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
     });
     it('should iterate number', function () {
-        var obj = evaluate(parse('count is 0; 3 _ {count is @i}; count'));
+        var obj = evaluate(parse('count = 0; 3 _ {count is $i}; count'));
         should.exist(obj);
         obj.value().should.equal(3);
     });
     it('should iterate number result', function () {
-        var obj = evaluate(parse('sum is 0; book is red is red; book is? red _ {sum is @el}; sum'));
+        var obj = evaluate(parse('sum = 0; book is red is red; book is? red _ {sum is $el}; sum'));
         should.exist(obj);
         obj.value().should.equal(4);
     });
     it('should ask with string for result', function () {
         var t = createIn(4);
-        var obj = evaluate(parse('sum is 0; "enter the number" _ {sum is @el}; sum'), null, t);
+        var obj = evaluate(parse('sum = 0; "enter the number" _ {sum is $el}; sum'), null, t);
         should.exist(obj);
         obj.value().should.equal(4);
     });
     it('should ask with string for text result', function () {
         var t = createIn('John');
-        var obj = evaluate(parse('name is ""; "enter your name" _ {name is @el}; name'), null, t);
+        var obj = evaluate(parse('name = ""; "enter your name" _ {name is $el}; name'), null, t);
         should.exist(obj);
         obj.value().should.equal('John');
     });
     it('should iterate list', function () {
-        var obj = evaluate(parse('book; [red green blue] _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; [red green blue] _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -78,7 +78,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should pre-evaluate list', function () {
-        var obj = evaluate(parse('book; a is "red"; b is "green"; c is "blue"; [a b c] _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; a = "red"; b = "green"; c = "blue"; [a b c] _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -86,7 +86,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence', function () {
-        var obj = evaluate(parse('book; (red green blue) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (red green blue) _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -94,7 +94,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence with reference', function () {
-        var obj = evaluate(parse('book; b is "blue"; (red green @b) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; b = "blue"; (red green $b) _ {book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -102,7 +102,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence by reference', function () {
-        var obj = evaluate(parse('book; a is {count is @i; book is @el}; (red green blue) _ a; book'));
+        var obj = evaluate(parse('book; a = {count is $i; book is $el}; (red green blue) _ a; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -110,7 +110,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate range', function () {
-        var obj = evaluate(parse('book; (1 .. 3) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (1 .. 3) _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -118,7 +118,7 @@ describe('iterable', function () {
         obj.size(3).should.equal(1);
     });
     it('should iterate range with step', function () {
-        var obj = evaluate(parse('book; (1 .. 6 2) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (1 .. 6 2) _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -130,7 +130,7 @@ describe('iterable', function () {
         obj.size(7).should.equal(0);
     });
     it('should iterate alpha range', function () {
-        var obj = evaluate(parse('book; (a .. c) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (a .. c) _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('a').should.equal(1);
@@ -138,7 +138,7 @@ describe('iterable', function () {
         obj.size('c').should.equal(1);
     });
     it('should iterate alpha range with step', function () {
-        var obj = evaluate(parse('book; (a .. f 2) _ {count is @i; book is @el}; book'));
+        var obj = evaluate(parse('book; (a .. f 2) _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('a').should.equal(1);
@@ -150,7 +150,7 @@ describe('iterable', function () {
         obj.size('g').should.equal(0);
     });
     it('should iterate dynamic range', function () {
-        var obj = evaluate(parse('book; a is 1; b is 3; (@a .. @b) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; a = 1; b = 3; ($a .. $b) _ {book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -158,7 +158,7 @@ describe('iterable', function () {
         obj.size(3).should.equal(1);
     });
     it('should iterate dynamic range with step', function () {
-        var obj = evaluate(parse('book; a is 1; b is 6; c is 2; (@a .. @b @c) _ {book is @el}; book'));
+        var obj = evaluate(parse('book; a = 1; b = 6; c = 2; ($a .. $b $c) _ {book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size(1).should.equal(1);
@@ -170,7 +170,7 @@ describe('iterable', function () {
         obj.size(7).should.equal(0);
     });
     it('should support continuation', function () {
-        var obj = evaluate(parse('(apple color) ... {@el is red}; apple is color'));
+        var obj = evaluate(parse('(apple color) ... {$el is red}; apple is color'));
         should.exist(obj);
         obj.value().should.equal('apple');
         obj.size('red').should.equal(1);

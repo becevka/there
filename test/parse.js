@@ -8,7 +8,7 @@ var parse = function(text) {
     return parser.parse(text).sequence;
 };
 
-describe('parse', function () {
+describe('parsing', function () {
     it('should parse symbol', function () {
         var parsed = parse('x');
         should.exist(parsed);
@@ -43,7 +43,7 @@ describe('parse', function () {
         value.should.equal("a", value);
     });
     it('should parse two strings', function () {
-        var parsed = parse('"Hello " + "world" @print');
+        var parsed = parse('"Hello " + "world" $print');
         should.exist(parsed.next.next.next);
         var value = parsed.next.next.next.value;
         value.should.equal("print", value);
@@ -79,16 +79,16 @@ describe('parse', function () {
         value.should.equal("a ' b", value);
     });
     it('should parse resource', function () {
-        var parsed = parse('@print x');
+        var parsed = parse('$print x');
         parsed.type.should.equal("resource", parsed.type);
         parsed.value.should.equal("print", parsed.value);
     });
     it('should parse block', function () {
-        var parsed = parse('x is { @print x }');
+        var parsed = parse('x is { $print x }');
         should.exist(parsed.next.next);
         var value = parsed.next.next.value;
         parsed.next.next.type.should.equal("block", parsed.next.next.type);
-        value.should.equal("@print x", value);
+        value.should.equal("$print x", value);
     });
     it('should parse seq', function () {
         var parsed = parse('x is ( a b )');
@@ -105,25 +105,25 @@ describe('parse', function () {
         value.should.equal("a b", value);
     });
     it('should parse block sequence', function () {
-        var parsed = parse('x is { @print x }');
+        var parsed = parse('x is { $print x }');
         var next = parsed.next.next;
         next.type.should.equal("block", next.type);
-        next.value.should.equal("@print x", next.value);
+        next.value.should.equal("$print x", next.value);
         next.getSequence().next.value.should.equal("x", "sequence");
     });
     it('should parse block sequence without spaces', function () {
-        var parsed = parse('x is{@print x}');
+        var parsed = parse('x is{$print x}');
         var next = parsed.next.next;
         next.type.should.equal("block", next.type);
-        next.value.should.equal("@print x", next.value);
+        next.value.should.equal("$print x", next.value);
         next.getSequence().next.value.should.equal("x", "sequence");
     });
     it('should parse inner block', function () {
-        var parsed = parse('x is { y is { @print x } }');
+        var parsed = parse('x is { y is { $print x } }');
         should.exist(parsed.next.next);
         var value = parsed.next.next.value;
         parsed.next.next.type.should.equal("block", parsed.next.next.type);
-        value.should.equal("y is { @print x }", value);
+        value.should.equal("y is { $print x }", value);
     });
     it('should parse multi line', function () {
         var parsed = parse('x is 0 \n   \n y is 2');
@@ -139,19 +139,19 @@ describe('parse', function () {
         value.should.equal('a \n b', value);
     });
     it('should parse multi line block', function () {
-        var parsed = parse('x is { @print x \n y is { @print x } }');
+        var parsed = parse('x is { $print x \n y is { $print x } }');
         should.exist(parsed.next.next);
         var value = parsed.next.next.value;
         parsed.next.next.type.should.equal("block", parsed.next.next.type);
-        value.should.equal("@print x \n y is { @print x }", value);
+        value.should.equal("$print x \n y is { $print x }", value);
     });
     it('should parse correct line in multi line string', function () {
-        var parsed = parse('x is "a \n b" \n @print x');
+        var parsed = parse('x is "a \n b" \n $print x');
         should.exist(parsed.next.next.next.next);
         parsed.next.next.next.next.line.should.equal(3, 'line');
     });
     it('should parse context switch', function () {
-        var parsed = parse('x is "a"; @print x');
+        var parsed = parse('x is "a"; $print x');
         should.exist(parsed.next.next.next);
         parsed.next.next.next.type.should.equal('switch');
     });
@@ -168,5 +168,49 @@ describe('parse', function () {
         value.type.should.equal('switch');
         parsed = parse(' {x is  "a man"  } x ');
         should.not.exist(parse(parsed.value).next.next.next);
+    });
+    it('should read aliases', function () {
+        var parsed = parse('x is "a man" ');
+        parsed.next.value.should.equal('+');
+    });
+    it('should read phrases', function () {
+        var parsed = parse('x is not "a man" ');
+        parsed.value.should.equal('x');
+        parsed.next.value.should.equal('-');
+        parsed.next.next.value.should.equal('a man');
+    });
+    it('should read many phrases', function () {
+        var parsed = parse('x is not "a man"; c to be "a man"');
+        parsed.next.value.should.equal('-');
+        parsed.next.next.next.next.value.should.equal('c');
+        parsed.next.next.next.next.next.value.should.equal('=');
+        parsed.next.next.next.next.next.next.value.should.equal('a man');
+    });
+    it('should skip articles phrases', function () {
+        var parsed = parse('x is a man; c is an old');
+        parsed.next.next.value.should.equal('man');
+        parsed.next.next.next.next.next.next.value.should.equal('old');
+    });
+    it('should read regexp phrases', function () {
+        var parsed = parse('let x be 0; let y be 1');
+        parsed.value.should.equal('x');
+        parsed.next.value.should.equal('=');
+        parsed.next.next.value.should.equal(0);
+        parsed.next.next.next.value.should.equal(';');
+        parsed.next.next.next.next.value.should.equal('y');
+        parsed.next.next.next.next.next.value.should.equal('=');
+        parsed.next.next.next.next.next.next.value.should.equal(1);
+    });
+    it('should not replace phrases in text', function () {
+        var parsed = parse('let x be "I say let y be 1"');
+        parsed.value.should.equal('x');
+        parsed.next.value.should.equal('=');
+        parsed.next.next.value.should.equal("I say let y be 1");
+    });
+    it('should not replace phrases in not parsed block', function () {
+        var parsed = parse('let x be { let y be 1 }');
+        parsed.value.should.equal('x');
+        parsed.next.value.should.equal('=');
+        parsed.next.next.value.should.equal(" let y be 1 ");
     });
 });

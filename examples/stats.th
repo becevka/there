@@ -1,21 +1,21 @@
-start is @time;
+start = $time;
 
-$ rand;
+@ rand;
 
-generate is {
-    (?generated) : { @rand @options };
-    item << @el;
-    @num _ { item is generated };
-    #opts << @options;
+generate = {
+    (?generated) : { $rand $options };
+    item << $el;
+    $num _ { item is generated };
+    #opts << $options;
     #opts add cherry;
-} (@num @options @env{rand});
+} ($num $options $env{rand});
 
-check is {
-    (?times) : {@what is? @type};
-    '' + @what + ' is ' + @type + ': ' + times @print;
-} (@what @type);
+check = {
+    (?times) : {$what is? $type};
+    '' + $what + ' is ' + $type + ': ' + times $print;
+} ($what $type);
 
-opts is [apple pear plum];
+opts = [apple pear plum];
 
 apple generate 100000 opts;
 
@@ -23,5 +23,5 @@ check apple apple;
 check apple pear;
 check apple plum;
 
-end is @time;
+end = $time;
 end - start

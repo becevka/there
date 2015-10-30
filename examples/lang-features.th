@@ -6,12 +6,12 @@ is pear
 apple has seed
 apple isnot pear
 apple is! pear
-apple is? red @print
+apple is? red $print
 
 
 apple
 apple + red
-@print apple ? red
+$print apple ? red
 pear
 apple . seed
 apple ! pear
@@ -29,28 +29,28 @@ b is {
 a; b; #calls
 
 color is {
-    @el is red
+    $el is red
 }
 
 apple color
 
 color is {
-    @el is @color #connect to parameter
-    @next @el @color
-} (@color @next) # for color and next
+    $el is $color #connect to parameter
+    $next $el $color
+} ($color $next) # for color and next
 
 print is {
-    @print @1 is? @2
+    $print $1 is? $2
 } #no named parameters
 
 print apple red
 
 color is {
-    @el is? apple {
-        @el is red
+    $el is? apple {
+        $el is red
     }
-    @el is? pear {
-        @el is yellow
+    $el is? pear {
+        $el is yellow
     }
 }
 
@@ -90,52 +90,52 @@ t;
 
 (* color) ... {
     (c) : { #define c from {}
-         @el is? apple {
-            @export red
+         $el is? apple {
+            $export red
          } or {
-            @export yellow
+            $export yellow
          }
     }
-    @el is c
+    $el is c
 }
 
 (rotten) ... {
-    @el is yellow on green
-    @el is brown on red
+    $el is yellow on green
+    $el is brown on red
 }
 
 apple ? red _ {
-    @print 'read apple'
+    $print 'read apple'
 }
 
 # special block executions
 
 4 _ {
-    @print @i; #i allocates the iteration number.
-    @print @el #will be 4
+    $print $i; #i allocates the iteration number.
+    $print $el #will be 4
 }
 
 'Enter your name' _ {
-    @print @el # will be the input
+    $print $el # will be the input
 }
 
 color is {
-    is? @apple {
-        @apple is red
+    is? $apple {
+        $apple is red
     }
-    is? @pear {
-        @pear is yellow
+    is? $pear {
+        $pear is yellow
     }
 }
 
-color (@apple) apple
-color (@pear) pear
+color ($apple) apple
+color ($pear) pear
 
 fn is {
-    @print @s
+    $print $s
 }
 
-fn (@s something) pear something # pear
+fn ($s something) pear something # pear
 
 
 #history
@@ -155,40 +155,40 @@ apple forget test
 #extensions
 
 print is {
-    @print @1 is? @2
+    $print $1 is? $2
 }
 
 color is {
-    @el is @color
-    (next) : { @next with {
-            @print 'from ' @el
+    $el is $color
+    (next) : { $next with {
+            $print 'from ' $el
         }
     }
-    @el next @color
-} (@color, @next)
+    $el next $color
+} ($color, $next)
 
 apple color red print # 'from apple'
 
 parser is {
-    @args _ {
-        @print @el
+    $args _ {
+        $print $el
     }
 }
 
 parser there is completely new language
 
 extend is {
-    s is sequence @args
+    s is sequence $args
     b is block s
-    v is @el with b
+    v is $el with b
     v
 }
 
 test is {
-    @print 'a'
+    $print 'a'
 }
 
-(test2): {test extend @print 'b'}
+(test2): {test extend $print 'b'}
 
 
 #groups/lists
@@ -203,12 +203,12 @@ basket is? apple #0
 basket 1 #apple
 
 fill is {
-    g is [](@amount) #if we will use type we will get all the same here
-    @amount _ {
-        g add @type with #creates new
+    g is []($amount) #if we will use type we will get all the same here
+    $amount _ {
+        g add $type with #creates new
     }
     g
-} (@amount, @type)
+} ($amount, $type)
 
 (basket) : {fill 12 apple}
 
@@ -224,17 +224,17 @@ seq add 'world' # [b is 'hello' 'world']
 #iterators
 
 (red blue green) _ {
-    apple is @el
+    apple is $el
 }
 
 #ranges
 
 (1 .. 12) _ {
-    count + @el
+    count + $el
 }
 
 (a .. 33 3) _ { #start end step
-    text + @el
+    text + $el
 }
 
 #convertion
@@ -252,7 +252,7 @@ a is list [b is 'hello'] # [b, is, 'hello']
 
 #punctuation
 
-apple is red; pear is yellow; @print? there
+apple is red; pear is yellow; $print? there
 
 
 

@@ -95,29 +95,29 @@ describe('evaluate', function () {
     });
     it('should do print', function () {
         var t = createOut('book');
-        var obj = evaluate(parse('book is red @print'), null, t);
+        var obj = evaluate(parse('book is red $print'), null, t);
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
     });
     it('should print there', function () {
         var t = createOut('there');
-        evaluate(parse('@print'), null, t);
+        evaluate(parse('$print'), null, t);
     });
     it('should print size', function () {
         var t = createOut('1');
-        evaluate(parse('book is? book @print'), null, t);
+        evaluate(parse('book is? book $print'), null, t);
     });
     it('should print details', function () {
         var t = createOut('2');
-        var obj = evaluate(parse('book is red is red; book is? red @print; book'), null, t);
+        var obj = evaluate(parse('book is red is red; book is? red $print; book'), null, t);
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(2);
     });
     it('should do print all', function () {
         var t = createOut('red');
-        var obj = evaluate(parse('book is red @print? book'), null, t);
+        var obj = evaluate(parse('book is red $print? book'), null, t);
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -131,7 +131,7 @@ describe('evaluate', function () {
         t.size('book').should.equal(0);
     });
     it('should ask for resource', function (done) {
-        var parsed = parse('book is @red');
+        var parsed = parse('book is $red');
         evaluator.defaultInput = "red";
         evaluate(parsed, null, null, function (obj) {
             should.exist(obj);

@@ -1,63 +1,63 @@
 total = 0
 
 11 _ {
-    total + @i
+    total + $i
 }
 
-total @print;
+total $print;
 
 #55
 
-plusOne = {@a + 1} (@a);
+plusOne = {$a + 1} ($a);
 
-plusOne 10 @print;
+plusOne 10 $print;
 
 #11
 
 pow = {
     res = 1;
-    @exp _ {
-        res * @base
+    $exp _ {
+        res * $base
     }
-} (@base @exp);
+} ($base $exp);
 
-pow 2 10 @print;
+pow 2 10 $print;
 
 #1024
 
 x = 4;
 (a) : {x += 50};
 
-x @print;
-a @print;
+x $print;
+a $print;
 
 #4
 #54
 
 f =  {
-   {@a + @b} (@@a @b)
-} (@a);
+   {$a + $b} ($$a $b)
+} ($a);
 
-f 4 5 @print;
+f 4 5 $print;
 
 #9
 
-f 3 4 @print;
+f 3 4 $print;
 
 #7
 
-fx = {@a + @b} (@a{f 7 9} @b);
-fx 6 @print;
+fx = {$a + $b} ($a{f 7 9} $b);
+fx 6 $print;
 
 #22
 
 sum = {
     sum = 0;
-    @array _ {
-        sum + @el
+    $array _ {
+        sum + $el
     }
-} (@array);
+} ($array);
 
-sum [1 2 3] @print;
+sum [1 2 3] $print;
 
 #6

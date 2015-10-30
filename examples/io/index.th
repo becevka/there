@@ -1,1 +1,1 @@
-test @file "../io-test.txt";
+test $file "../io-test.txt";
