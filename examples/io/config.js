@@ -34,5 +34,6 @@ module.exports = function (config) {
         }
         return source;
     };
+    config.resources.file.arity = 1;
     config.index = 'index';
 };

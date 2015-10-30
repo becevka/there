@@ -11,17 +11,16 @@ generate = {
 } ($num $options $env{rand});
 
 check = {
-    (?times) : {$what is? $type};
+    (times) : {$what is? $type};
     '' + $what + ' is ' + $type + ': ' + times $print;
 } ($what $type);
 
-opts = [apple pear plum];
+opts = [red blue green violet yellow brown black pink
+    white turquoise orange carrot emerald aqua purple
+    burgundy chocolate sepia mahogany nude];
 
 apple generate 100000 opts;
 
-check apple apple;
-check apple pear;
-check apple plum;
+opts _ { check apple $el }
 
-end = $time;
-end - start
+$time - start
