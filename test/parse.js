@@ -211,6 +211,6 @@ describe('parsing', function () {
         var parsed = parse('let x be { let y be 1 }');
         parsed.value.should.equal('x');
         parsed.next.value.should.equal('=');
-        parsed.next.next.value.should.equal(" let y be 1 ");
+        parsed.next.next.value.should.equal("let y be 1");
     });
 });
