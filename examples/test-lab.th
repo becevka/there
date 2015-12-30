@@ -1,0 +1,11 @@
+@ where;
+
+let tests be {
+    'just do it' > {
+        'test' $print;
+    };
+    tests $print?;
+
+} ($env{where});
+tests;
+'done'

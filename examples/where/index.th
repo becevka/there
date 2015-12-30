@@ -1,0 +1,20 @@
+tests = |describe test|;
+> = {
+    $map $print?;
+    $map + [$$el $$test];
+} ($map{tests} $test);
+
+should = {
+    should = {
+        $el ?! $expected _ {'' + $el + ', but expected:' + $expected  $error};
+    } ($expected);
+};
+
+(s) : { should };
+
+all = {
+    s <<;
+    tests _ {
+        $test ($env{s});
+    }
+}

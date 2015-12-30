@@ -72,6 +72,12 @@ describe('parsing', function () {
         var value = parsed.next.next.value;
         value.should.equal('a " b', value);
     });
+    it('should not miss parse escapes', function () {
+        var parsed = parse('x is "a \\d b"');
+        should.exist(parsed.next.next);
+        var value = parsed.next.next.value;
+        value.should.equal('a \\d b', value);
+    });
     it('should parse escaped string 2', function () {
         var parsed = parse("x is 'a \\' b'");
         should.exist(parsed.next.next);
@@ -103,6 +109,22 @@ describe('parsing', function () {
         var value = parsed.next.next.value;
         parsed.next.next.type.should.equal("list", parsed.next.next.type);
         value.should.equal("a b", value);
+    });
+    it('should parse table', function () {
+        var parsed = parse('x is | a b c |');
+        should.exist(parsed.next.next);
+        var value = parsed.next.next.value;
+        parsed.next.next.type.should.equal("table", parsed.next.next.type);
+        value.should.equal("a b c", value);
+    });
+    it('should parse table sequence', function () {
+        var parsed = parse('x is | a b c |');
+        var next = parsed.next.next;
+        should.exist(next);
+        var value = next.value;
+        next.type.should.equal("table", next.type);
+        value.should.equal("a b c", value);
+        next.getSequence().next.value.should.equal("b", "sequence");
     });
     it('should parse block sequence', function () {
         var parsed = parse('x is { $print x }');
