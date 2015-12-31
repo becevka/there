@@ -1,11 +1,14 @@
 @ where;
 
 let tests be {
-    'just do it' > {
+    'test1' > {
         'test' $print;
     };
-    tests $print?;
-
+    'test2' > {
+        should <<;
+        'test1' should 'test2';
+    };
+    all;
 } ($env{where});
 tests;
 'done'

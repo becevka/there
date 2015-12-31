@@ -78,7 +78,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should pre-evaluate list', function () {
-        var obj = evaluate(parse('book; a = "red"; b = "green"; c = "blue"; [a b c] _ {count is $i; book is $el}; book'));
+        var obj = evaluate(parse('book; a = red; b = green; c = blue; [a b c] _ {count is $i; book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
@@ -94,7 +94,7 @@ describe('iterable', function () {
         obj.size('blue').should.equal(1);
     });
     it('should iterate sequence with reference', function () {
-        var obj = evaluate(parse('book; b = "blue"; (red green $b) _ {book is $el}; book'));
+        var obj = evaluate(parse('book; b = blue; (red green $b) _ {book is $el}; book'));
         should.exist(obj);
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);

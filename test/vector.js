@@ -155,6 +155,11 @@ describe('vector', function () {
         should.exist(obj);
         obj.value().should.equal(22);
     });
+    it('should import arg', function () {
+        var obj = evaluate(parse('bid = {b << $a; 15 is b } ($a); sum = 10; sum bid 12'));
+        should.exist(obj);
+        obj.value().should.equal(27);
+    });
     it('should import args', function () {
         var obj = evaluate(parse('bid = {<<; $el is a } ($a); sum = 10; sum bid 12'));
         should.exist(obj);
@@ -206,6 +211,11 @@ describe('vector', function () {
         obj.value().should.equal('book');
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
+    });
+    it('should pass function as parameter', function () {
+        var obj = evaluate(parse('a = 0; fn = { arr = [$$f]; arr * 0 12}; fn ($f) {$1 - 2}'));
+        should.exist(obj);
+        obj.value().should.equal(10);
     });
     //TODO
     // a (* $a[\d] * $b[\d] *) there was 1 woman with 2 cats

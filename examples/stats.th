@@ -6,8 +6,6 @@ generate = {
     (?generated) : { $rand $options };
     item << $el;
     $num _ { item is generated };
-    #opts << $options;
-    #opts add cherry;
 } ($num $options $env{rand});
 
 check = {
