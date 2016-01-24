@@ -81,6 +81,10 @@ describe('table', function () {
         var obj = evaluate(parse('t = |key value|; t + ["a" 1]; t + ["b" 2]; t + ["a" "c"]; t * "a \\d"'));
         obj.value().should.eql([['a', 1]]);
     });
+    it('should return records by full regex-search', function () {
+        var obj = evaluate(parse('t = |key value|; t + ["a" 1]; t + ["b" 2]; t + ["a" "c"]; t + ["a" 12]; t * "^a \\d$"'));
+        obj.value().should.eql([['a', 1]]);
+    });
     it('should return count by wrong index', function () {
         var obj = evaluate(parse('t = |key value|; t * 1'));
         obj.value().should.eql(0);

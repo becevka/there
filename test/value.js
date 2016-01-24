@@ -48,6 +48,11 @@ describe('value', function () {
         should.exist(obj);
         obj.value().should.equal(2);
     });
+    it('should return char in string', function () {
+        var obj = evaluate(parse('a = "Hello world"; a * 4'));
+        should.exist(obj);
+        obj.value().should.equal('o');
+    });
     it('should combine numbers', function () {
         var t = createOut(4);
         var obj = evaluate(parse('3 + 1 $print'), null, t);
@@ -97,6 +102,11 @@ describe('value', function () {
         var obj = evaluate(parse('a will be $t'), null, t);
         should.exist(obj);
         obj.value().should.eql(["test", "test2"]);
+    });
+    it('should add value to list', function () {
+        var obj = evaluate(parse('a = 4; arr = [1 2 3]; arr add a'), null);
+        should.exist(obj);
+        obj.value().should.eql([1, 2, 3, 4]);
     });
 
 });
