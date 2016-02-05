@@ -195,6 +195,14 @@ describe('parsing', function () {
         var parsed = parse('x is "a man" ');
         parsed.next.value.should.equal('+');
     });
+    it('should skip aliases in  sequences', function () {
+        var parsed = parse('{$a and $b} ($a and $b) $a and $b ');
+        parsed.value.should.equal('$a and $b');
+        parsed.getSequence().next.value.should.equal('+');
+        parsed.next.value.should.equal('$a and $b');
+        parsed.next.getSequence().next.value.should.equal('and');
+        parsed.next.next.next.value.should.equal('+');
+    });
     it('should read phrases', function () {
         var parsed = parse('x is not "a man" ');
         parsed.value.should.equal('x');

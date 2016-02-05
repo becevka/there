@@ -4,16 +4,15 @@ tests = |describe test|;
     tests + [$$el $$test];
 } ($test);
 
-should = {
+should => {
         v << $el;
         $el ?! $expected _ {'' + v + ', but expected:' + $expected  $error};
 } ($expected);
 
 all = {
     tests <<;
-    should <<;
     tests _ {
         test <<;
-        test ($should) should;
+        test;
     }
-}
+};

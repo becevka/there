@@ -170,6 +170,12 @@ describe('vector', function () {
         should.exist(obj);
         obj.value().should.equal(22);
     });
+    it('should export global from top', function () {
+        var obj = evaluate(parse('a => 12; bid = { a + 10 }; bid'));
+        should.exist(obj);
+        obj.value().should.equal(22);
+        evaluator.globals['a'] = null;
+    });
     it('should multi return', function () {
         var obj = evaluate(parse('bid = {a = 12; b = 10 + $i; a >>; b >>;} ($i); bid 5'));
         should.exist(obj);
@@ -213,7 +219,7 @@ describe('vector', function () {
         obj.size('green').should.equal(1);
     });
     it('should pass function as parameter', function () {
-        var obj = evaluate(parse('a = 0; fn = { arr = [$$f]; arr * 0 12}; fn ($f) {$1 - 2}'));
+        var obj = evaluate(parse('fn = { arr = [$$f]; arr * 0 12}; fn ($f) {$1 - 2}'));
         should.exist(obj);
         obj.value().should.equal(10);
     });

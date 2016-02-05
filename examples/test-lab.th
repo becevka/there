@@ -5,7 +5,6 @@ let tests be {
         'test' $print;
     };
     'test2' > {
-        should <<;
         'test1' should 'test2';
     };
     all;
