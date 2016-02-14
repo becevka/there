@@ -28,7 +28,7 @@ pass => {
 
 result => {
     a = 0;
-    a + $i + 1;
+    a + $num + 1;
 
     suite <<;
 
@@ -38,7 +38,7 @@ result => {
     } || {
         'ok ' + a + ' ' + suite  + ' ' + $describe $print;
     };
-} ($describe $i);
+} ($describe $num);
 
 skip => {
     skips <<;
@@ -78,4 +78,4 @@ one => {
     test <<;
     test;
     result $describe $num;
-} ($test $describe $num)
+} ($test $describe $num);

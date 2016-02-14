@@ -1,0 +1,21 @@
+blah $print;
+
+d = 12;
+
+c = `${
+(function() {
+blah.type = 'hacked';
+var c = d - 7;
+d.val = 0;
+return c;
+})()
+}`;
+
+blah $print;
+d $print;
+c $print;
+
+e = `${[blah.type = 'hacked', d - 7, d.val = 3][1]}`;
+
+d $print;
+e

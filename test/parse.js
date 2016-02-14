@@ -84,6 +84,19 @@ describe('parsing', function () {
         var value = parsed.next.next.value;
         value.should.equal("a ' b", value);
     });
+    it('should parse template', function () {
+        var parsed = parse("x is `${2 + 3}`");
+        should.exist(parsed.next.next);
+        parsed.next.next.type.should.equal("template", parsed.next.next.type);
+        var value = parsed.next.next.value;
+        value.should.equal("${2 + 3}", value);
+    });
+    it('should parse escaped template', function () {
+        var parsed = parse("x is `${2 \\` 3}`");
+        should.exist(parsed.next.next);
+        var value = parsed.next.next.value;
+        value.should.equal("${2 ` 3}", value);
+    });
     it('should parse resource', function () {
         var parsed = parse('$print x');
         parsed.type.should.equal("resource", parsed.type);
@@ -163,6 +176,12 @@ describe('parsing', function () {
     });
     it('should parse multi line string', function () {
         var parsed = parse('x is "a \n b"');
+        should.exist(parsed.next.next);
+        var value = parsed.next.next.value;
+        value.should.equal('a \n b', value);
+    });
+    it('should parse multi line template', function () {
+        var parsed = parse('x is `a \n b`');
         should.exist(parsed.next.next);
         var value = parsed.next.next.value;
         value.should.equal('a \n b', value);

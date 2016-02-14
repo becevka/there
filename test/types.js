@@ -35,24 +35,10 @@ describe('types', function () {
         should.exist(obj);
         obj.value().should.equal('blah');
     });
+    it('should support simple string interpolation', function () {
+        var obj = evaluate(parse('a = 12; b = `${a + 3}`; b'));
+        should.exist(obj);
+        obj.value().should.equal('15');
+    });
+
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

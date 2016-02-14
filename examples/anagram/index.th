@@ -1,4 +1,3 @@
-u $print?;
 u @ utils;
 
 Anagram =>  {
