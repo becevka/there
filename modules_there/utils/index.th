@@ -1,0 +1,15 @@
+lower = {
+    $str toLower
+} ($str);
+
+upper = {
+    $str toUpper
+} ($str);
+
+tokens = {
+    $str toChars
+} ($str);
+
+sortList = {
+    $list sort
+} ($list);

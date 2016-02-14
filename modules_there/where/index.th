@@ -4,15 +4,78 @@ tests = |describe test|;
     tests + [$$el $$test];
 } ($test);
 
+failed = 0;
+skips = [];
+selected = [];
+
 should => {
-        v << $el;
-        $el ?! $expected _ {'' + v + ', but expected:' + $expected  $error};
+    $el == $expected _ {} else {
+        'Expected ' + $v + ', to be ' + $expected  $error;
+        fail;
+    } ($v{$el});
 } ($expected);
+
+fail => {
+    f << failed;
+    f + 1;
+    f >> failed;
+};
+
+pass => {
+    f = 0;
+    f >> failed;
+};
+
+result => {
+    a = 0;
+    a + $i + 1;
+
+    suite <<;
+
+    failed <<;
+    failed ?! 0 _ {
+        'not ok ' + a + ' ' + suite  + ' ' + $describe $print;
+    } || {
+        'ok ' + a + ' ' + suite  + ' ' + $describe $print;
+    };
+} ($describe $i);
+
+skip => {
+    skips <<;
+    skips + $describe;
+    $describe
+} ($describe);
+
+only => {
+    selected <<;
+    selected + $describe;
+    $describe
+} ($describe);
 
 all = {
     tests <<;
-    tests _ {
-        test <<;
-        test;
-    }
+
+    selected <<;
+    selected _ {
+        t = $all * [$el];
+        one t $el $i;
+    } ($all{tests});
+
+    (hasSelected) : {selected % %};
+    hasSelected == 0 _ {
+        skips <<;
+        (skipped) : {skips % %}
+        tests _ {
+            skips ?! $describe _ {
+                one $test $describe $num;
+            } ($num{$i - skipped});
+        };
+    };
 };
+
+one => {
+    pass;
+    test <<;
+    test;
+    result $describe $num;
+} ($test $describe $num)

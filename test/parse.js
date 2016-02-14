@@ -117,6 +117,13 @@ describe('parsing', function () {
         parsed.next.next.type.should.equal("table", parsed.next.next.type);
         value.should.equal("a b c", value);
     });
+    it('should skip empty table', function () {
+        var parsed = parse('x is ||');
+        should.exist(parsed.next.next);
+        var value = parsed.next.next.value;
+        parsed.next.next.type.should.equal("word", parsed.next.next.type);
+        value.should.equal("||", value);
+    });
     it('should parse table sequence', function () {
         var parsed = parse('x is | a b c |');
         var next = parsed.next.next;

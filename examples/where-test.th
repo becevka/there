@@ -1,6 +1,8 @@
+suite = 'simple tests';
+
 'test1' > {
     'test' $print;
 };
 'test2' > {
-    'test1' should be 'test2';
+    'test1' should 'test2';
 };

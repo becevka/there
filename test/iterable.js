@@ -31,6 +31,12 @@ describe('iterable', function () {
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
     });
+    it('should not cache constructors', function () {
+        var obj = evaluate(parse('str1 = "FIZZ";str2 = "BUZZ";u @ utils; ' +
+            'fn = {(a) : {lower $one}; (b) : {lower $two}; a == b } ($one $two $env{u}); fn str1 str2'));
+        should.exist(obj);
+        obj.value().should.equal(0);
+    });
     it('should have dynamic constructors', function () {
         var t = there();
         var obj = evaluate(parse('book is red; (?a) : {book is? red}; a'), null, t);
@@ -76,6 +82,12 @@ describe('iterable', function () {
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
         obj.size('blue').should.equal(1);
+    });
+    it('should evaluate empty list', function () {
+        var obj = evaluate(parse('book; [] _ {book is red}; book'));
+        should.exist(obj);
+        obj.value().should.equal('book');
+        obj.size('red').should.equal(0);
     });
     it('should pre-evaluate list', function () {
         var obj = evaluate(parse('book; a = red; b = green; c = blue; [a b c] _ {count is $i; book is $el}; book'));
@@ -168,11 +180,5 @@ describe('iterable', function () {
         obj.size(5).should.equal(1);
         obj.size(6).should.equal(0);
         obj.size(7).should.equal(0);
-    });
-    it('should support continuation', function () {
-        var obj = evaluate(parse('(apple color) ... {$el is red}; apple is color'));
-        should.exist(obj);
-        obj.value().should.equal('apple');
-        obj.size('red').should.equal(1);
     });
 });

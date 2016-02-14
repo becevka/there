@@ -125,6 +125,11 @@ describe('vector', function () {
         obj.size('red').should.equal(1);
         obj.size('green').should.equal(1);
     });
+    it('should run block with params', function () {
+        var obj = evaluate(parse('1 _ { $a + 2 } ($a{5})'));
+        should.exist(obj);
+        obj.value().should.equal(7);
+    });
     it('should run return block', function () {
         var obj = evaluate(parse('f = {{$a + $b} ($a{$a} $b)} ($a); f 5 4'));
         should.exist(obj);
@@ -222,6 +227,16 @@ describe('vector', function () {
         var obj = evaluate(parse('fn = { arr = [$$f]; arr * 0 12}; fn ($f) {$1 - 2}'));
         should.exist(obj);
         obj.value().should.equal(10);
+    });
+    it('should support control statements', function () {
+        var obj = evaluate(parse('a = 0; 1 ?! 1 _ {a + 2} else {a + 3} else {a + 4}; a'));
+        should.exist(obj);
+        obj.value().should.equal(3);
+    });
+    it('should support control statements as returns', function () {
+        var obj = evaluate(parse('a = "test"; a ?! list _ {[a]} else {a}'));
+        should.exist(obj);
+        Array.isArray(obj.value()).should.equal(true);
     });
     //TODO
     // a (* $a[\d] * $b[\d] *) there was 1 woman with 2 cats

@@ -1,0 +1,51 @@
+suite = 'Anagram';
+
+'no matches' > {
+    (A) : {Anagram 'diaper'};
+    A . matches [ 'hello' 'world' 'zombies' 'pants'] should [];
+};
+
+'detects simple anagram' > {
+    (A) : {Anagram 'ant'};
+     A . matches ['tan' 'stand' 'at'] should ['tan'];
+};
+
+'does not detect false positives' >  {
+    (A) : {Anagram 'galea'};
+    A . matches ['eagle'] should [];
+};
+
+'detects multiple anagrams' > {
+    (A) : {Anagram 'master'};
+    A . matches ['stream' 'pigeon' 'maters'] should ['stream' 'maters'];
+};
+
+'does not detect anagram subsets' >  {
+    (A) : {Anagram 'good'};
+    A . matches ['dog' 'goody'] should [];
+};
+
+'detects anagram' > {
+    (A) : {Anagram 'listen'};
+    A . matches ['enlists' 'google' 'inlets' 'banana'] should ['inlets'];
+};
+
+'detects multiple anagrams' > {
+    (A) : {Anagram 'allergy'};
+    A . matches ['gallery' 'ballerina' 'regally' 'clergy' 'largely' 'leading'] should ['gallery' 'regally' 'largely'];
+};
+
+'detects anagrams case-insensitively' > {
+    (A) : {Anagram 'Orchestra'};
+    A . matches ['cashregister' 'Carthorse' 'radishes'] should ['Carthorse'];
+};
+
+'does not detect a word as its own anagram' > {
+    (A) : {Anagram 'Banana'};
+    A . matches ['Banana'] should [];
+};
+
+'matches accepts string argument' > {
+    (A) : {Anagram 'ant'};
+    A . matches 'tan' should ['tan'];
+};

@@ -1,0 +1,39 @@
+u $print?;
+u @ utils;
+
+Anagram =>  {
+  matches = {
+    m = [];
+    (w) : { checkList $words };
+    w _ {
+      (b) : { sameWord $word $c == 0 } ($c{$el});
+      (c) : { isAnagram $word $c } ($c{$el});
+      b + c == 2 _ {
+        m + $m;
+      } ($m{$el})
+    };
+    m
+  } ($words $$word);
+} ($word);
+
+sameWord =>  {
+  (a) : {lower $string};
+  (b) : {lower $candidate};
+  a == b
+} ($string $candidate $env{u});
+
+isAnagram =>  {
+  (a) : {normalize $string};
+  (b) : {normalize $candidate};
+  a == b
+} ($string $candidate $env{u});
+
+normalize =>  {
+   (s) : {lower $string};
+   (t) : {tokens s};
+   sortList t
+} ($string $env{u});
+
+checkList => {
+    $list ? list _ { $list } || { [$$list] }
+} ($list);
