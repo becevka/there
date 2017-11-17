@@ -74,7 +74,10 @@
  **value** - is metatype with value property. For example, `12` is number metatype with value 12. If we specify `12 => a`. There is difference between **12** and **a**, since **12** is value, but **a** is metatype, actually it is an object, but we will get to it later
  
  **number** - is value with numeric value property, defined using integer or decimal numbers, eg. `12, 13.4`
- **string** - is value with string value property, defined using text in single or double quotes 
+
+ **string** - is value with string value property, defined using text in single or double quotes, eg. `"this is string", 'this is also string'`
+ 
+ **block**
  
  
  
