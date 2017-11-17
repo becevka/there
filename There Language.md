@@ -2,7 +2,7 @@
 
  ```generator processor (collector) (parameters) (=> reducer);```
 
-### Example 1
+#### Example 1
 
  ```there is apple;```
 
@@ -71,7 +71,10 @@
  **metatype** - is word with type of itself, when we say `apple;` we actually turn word **apple** into metatype apple. 
  Compare `apple is green` and `(apple) is green`, in the first case we access metatype apple and in second we create generator
  
- **value**  -value types combine big 
+ **value** - is metatype with value property. For example, `12` is number metatype with value 12. If we specify `12 => a`. There is difference between **12** and **a**, since **12** is value, but **a** is metatype, actually it is an object, but we will get to it later
+ 
+ **number** - is value with numeric value property, defined using integer or decimal numbers, eg. `12, 13.4`
+ **string** - is value with string value property, defined using text in single or double quotes 
  
  
  
