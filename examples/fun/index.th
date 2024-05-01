@@ -1,0 +1,17 @@
+#guess number game
+
+min = 1;
+max = 100;
+val = 56;#so far
+
+processUser = {
+    val == $n _ {'Correct' $print} || {'Wrong' $print};
+} ($n);
+
+
+'Welcome to guessing game with Veselka.
+Guess a number from 1 to 100: ' _ {
+    processUser $el;
+};
+
+'Bye!'

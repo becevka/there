@@ -2,16 +2,14 @@ u @ utils;
 
 Anagram =>  {
   matches = {
-    m = [];
-    (w) : { checkList $words };
+    matchesFound = [];
+    (w) : { $words ? list _ { $words } || { [$$words] } };
     w _ {
-      (b) : { sameWord $word $c == 0 } ($c{$el});
-      (c) : { isAnagram $word $c } ($c{$el});
-      b + c == 2 _ {
-        m + $m;
-      } ($m{$el})
+      (same) : { sameWord $word $candidate == 0 } ($candidate{$el});
+      (anagram) : { isAnagram $word $candidate } ($candidate{$el});
+      same + anagram == 2 _ {matchesFound + $match} ($match{$el});
     };
-    m
+    matchesFound
   } ($words $$word);
 } ($word);
 
@@ -32,7 +30,3 @@ normalize =>  {
    (t) : {tokens s};
    sortList t
 } ($string $env{u});
-
-checkList => {
-    $list ? list _ { $list } || { [$$list] }
-} ($list);

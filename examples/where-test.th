@@ -1,4 +1,4 @@
-suite = 'simple tests';
+let suite be 'simple tests';
 
 'test1' > {
     'test' $print;

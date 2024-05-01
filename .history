@@ -1,0 +1,30 @@
+\q
+\
+d
+f d
+f = {test is yellow} ($env)
+d
+vec ($env{d})
+d
+vec ($env) d
+d
+d = c
+c = {;}
+b is {;}
+a is test
+a is u
+a + u
+a + 3
+a + test
+test is a
+a
+a = vec
+test
+vec
+vec = { test is yellow }
+test is black
+test is green
+test
+\q
+b
+b = {~ 'yo';}

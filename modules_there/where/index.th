@@ -27,16 +27,16 @@ pass => {
 };
 
 result => {
-    a = 0;
-    a + $num + 1;
+    n = 0;
+    n + $num + 1;
 
     suite <<;
 
     failed <<;
     failed ?! 0 _ {
-        'not ok ' + a + ' ' + suite  + ' ' + $describe $print;
+        'not ok ' + n + ' ' + suite  + ' ' + $describe $print;
     } || {
-        'ok ' + a + ' ' + suite  + ' ' + $describe $print;
+        'ok ' + n + ' ' + suite  + ' ' + $describe $print;
     };
 } ($describe $num);
 
@@ -54,21 +54,20 @@ only => {
 
 all = {
     tests <<;
-
     selected <<;
     selected _ {
-        t = $all * [$el];
+        (t) : { $all * [$$desc] * 0 * 1} ($desc{$el});
         one t $el $i;
     } ($all{tests});
 
     (hasSelected) : {selected % %};
+    correction = 0;
     hasSelected == 0 _ {
         skips <<;
-        (skipped) : {skips % %}
         tests _ {
             skips ?! $describe _ {
                 one $test $describe $num;
-            } ($num{$i - skipped});
+            } ($num{$i - correction}) || {correction + 1};
         };
     };
 };

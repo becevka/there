@@ -13,15 +13,17 @@
     },
     "bugs": "https://github.com/kucoe/there/issues",
     "engines": {
-        "node": ">= 0.8.x"
+        "node": ">= 6.0.x"
     },
     "dependencies": {},
     "devDependencies": {
         "mocha": "*",
-        "should": "*"
+        "should": "*",
+        "nyc": "*"
     },
     "scripts": {
-        "test": "bin/there example/lang-steps.th"
+        "there-test": "bin/there example/lang-steps.th",
+        "test": "mocha"
     },
     "keywords": ["effect", "language"],
     "licenses": [

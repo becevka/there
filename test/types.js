@@ -31,14 +31,34 @@ describe('types', function () {
         obj.value().should.equal('blah');
     });
     it('should support value continuation', function () {
-        var obj = evaluate(parse('a = "BLAH"; (a lower) ... {$el isnot lower; $el isnot "BLAH";  $el is "blah"}; a is lower'));
+        var obj = evaluate(parse('a = "BLAH"; (a lower) ... {$el isnot lower; $el isnot "BLAH";  $el is "blah";}; a is lower; a'));
         should.exist(obj);
         obj.value().should.equal('blah');
+    });
+    it('should support value type continuation', function () {
+        var obj = evaluate(parse('a = "BLAH"; (string lower) ... {$el isnot lower; $el isnot "BLAH";  $el is "blah";}; a is lower; a'));
+        should.exist(obj);
+        obj.value().should.equal('blah');
+    });
+    it('should support value type effect continuation', function () {
+        var obj = evaluate(parse('(+ lower number) ... {"blah" is $1}; lower is 12'));
+        should.exist(obj);
+        obj.value().should.equal('blah12');
     });
     it('should support simple string interpolation', function () {
         var obj = evaluate(parse('a = 12; b = `${a + 3}`; b'));
         should.exist(obj);
         obj.value().should.equal('15');
+    });
+    it('should support value vector', function () {
+        var obj = evaluate(parse('obj = {a = 12; b = 13; ~ {a + b};}; obj'));
+        should.exist(obj);
+        obj.value().should.equal(25);
+    });
+    it('should support value definition', function () {
+        var obj = evaluate(parse('obj = {a = 12; b = 13; a + b; ~ a;}; obj'));
+        should.exist(obj);
+        obj.value().should.equal(25);
     });
 
 });
